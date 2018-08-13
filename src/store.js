@@ -1,9 +1,9 @@
-import { createStore, applyMiddleware} from 'redux';
-import reducer from './reducers/reducer';
-import {fetchPostsIfNeeded} from './actions/redditActions';
-import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+import { createLogger } from "redux-logger";
 
+import { fetchPostsIfNeeded } from "./actions/redditActions";
+import reducer from "./reducers/reducer";
 
 const loggerMiddleware = createLogger();
 
@@ -15,8 +15,7 @@ const store = createStore(
   )
 );
 
-store.dispatch(fetchPostsIfNeeded('all'));
-
-
+//Initilizing the app with the r/all subreddit
+store.dispatch(fetchPostsIfNeeded("all"));
 
 export default store;

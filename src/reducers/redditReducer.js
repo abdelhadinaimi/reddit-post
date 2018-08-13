@@ -1,14 +1,16 @@
 import { INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from '../actions/redditActions';
 import { REMOVE_SUBREDDIT } from '../actions/listActions';
 import { FETCH_SUBREDDIT_ERROR } from '../actions/errorActions';
+
 const defaultState = {
     error : false,
     isFetching: false,
     didInvalidate: false,
     hasNewPost: false,
     items: []
-};
-/* Reducer for a post in the posts array of our state*/
+  };
+
+  /* Reducer for a post in the posts array of our state*/
 function posts(state = defaultState,action) {
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
