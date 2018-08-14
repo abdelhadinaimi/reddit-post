@@ -2,6 +2,8 @@ import React from 'react';
 import Post from './post';
 import throttle from 'lodash/throttle';
 
+import notification from "../media/notification.mp3";
+
 class Subreddit extends React.Component{
 
   constructor(props){
@@ -15,11 +17,15 @@ class Subreddit extends React.Component{
         window.focus();
       }
     },5000);
-
+    const audio = new Audio(notification);
+    const playAudio = throttle(() => {
+      audio.play();
+    });
     this.state = {
       title : props.title,
       collapsed : true,
       callNotification,
+      playAudio,
       openedNewPost : false,
     };
   }
@@ -31,11 +37,10 @@ class Subreddit extends React.Component{
       });
 
       if(nextProps.notification) this.state.callNotification();
+      if(nextProps.sound) this.state.playAudio();
     }
   }
-  componentDidMount(){
-    
-  }
+  
   render(){
       const posts = this.props.reddit.items.map(item => (
         <Post key={item.id} item={item}/>

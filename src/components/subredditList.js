@@ -15,7 +15,8 @@ class subredditList extends React.Component{
               reddit={value[1]}
               reload={()=>this.handleReload(value[0])}
               remove={()=>this.handleRemove(value[0])}
-              notification={this.props.notification}/>
+              notification={this.props.notification}
+              sound={this.props.sound}/>
           ))}
         </div>
     )}
@@ -73,7 +74,8 @@ const getNewPosts = (postsBySubreddit) => (
 const mapStateToProps = (state) => ({
   postsBySubreddit: state.postsBySubreddit,
   delay: state.settings.delay,
-  notification: state.settings.notification
+  notification: state.settings.notification,
+  sound: state.settings.sound,
 })
 const SubredditList = connect(
   mapStateToProps
