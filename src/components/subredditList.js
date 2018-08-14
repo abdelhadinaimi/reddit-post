@@ -53,7 +53,7 @@ class subredditList extends React.Component{
 }
 //dispatchs fetchPostsIfNeeded for all the provided redditList
 const dispatchAll = (dispatch,redditList,invalidate = false) => {
-  redditList.map(subreddit => {
+  redditList.forEach(subreddit => {
     if(invalidate) dispatch(invalidateSubreddit(subreddit));
     dispatch(fetchPostsIfNeeded(subreddit));
   });
