@@ -1,5 +1,5 @@
 import React from 'react';
-import Subreddit from './subreddit';
+import Subreddit from './Subreddit';
 import { connect } from 'react-redux';
 import {invalidateSubreddit,fetchPostsIfNeeded} from '../actions/redditActions';
 import {removeSubreddit} from '../actions/listActions';
@@ -45,7 +45,10 @@ class subredditList extends React.Component{
     reloadAll = () => {
       //let props = this.props;
       const internalCallback = () => {
-        const {dispatch,postsBySubreddit,delay} = this.props;
+        const {dispatch,postsBySubreddit} = this.props;
+        let {delay} = this.props;
+        if(!Number.isInteger(delay) || delay < 5) delay = 5;
+
         dispatchAll(dispatch,getSubList(postsBySubreddit),true);
         setTimeout(()=>internalCallback(),delay*1000);
       }

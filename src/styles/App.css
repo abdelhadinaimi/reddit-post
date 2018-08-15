@@ -37,3 +37,16 @@
 	background-color: #f2dede;
 	border-color: #f2dede;
 }
+.info-span{
+  margin-right: 15%;
+  color:red;
+}
+@media only screen and (max-width : 425px) {
+  .time-span{
+    display: none;
+  }
+  .info-span{
+    margin-right: 0;
+  }
+}
+

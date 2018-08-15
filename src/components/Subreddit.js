@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from './post';
+import Post from './Post';
 import throttle from 'lodash/throttle';
 
 import notification from "../media/notification.mp3";
@@ -66,11 +66,11 @@ class Subreddit extends React.Component{
             </button>
           </span>
         
-          <span className="pull-right" style={{marginRight:'5px'}}>
+          <span className="time-span pull-right" style={{marginRight:'5px'}}>
             { isFetching || error ? "" : "Last fetched : " + new Date(this.props.reddit.lastUpdated).toLocaleTimeString()}
           </span>
 
-          <span className="pull-right" style={{marginRight:'15%',color:'red'}}>
+          <span className="info-span pull-right">
             { (isFetching || error || !hasNewPost || openedNewPost)  ? "" : "New Post !"}
           </span>
 

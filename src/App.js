@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SubredditList from './components/subredditList';
-import RedditAdder from './components/redditAdder';
-import SettingsModal from './components/settingsModal';
+import SubredditList from './components/SubredditList';
+import RedditAdder from './components/RedditAdder';
+import SettingsModal from './components/SettingsModal';
 import './styles/App.css';
 
 class App extends Component {

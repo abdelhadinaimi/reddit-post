@@ -7,7 +7,7 @@ class settingsModal extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      permission : Notification.permission
+      permission : window.Notification ? window.Notification.permission : "default"
     }
   }
   render() {
@@ -54,8 +54,7 @@ class settingsModal extends React.Component{
   handleChangeDelay(e){
     e.preventDefault();
     const {dispatch} = this.props;
-    const n = Number.parseInt(e.target.value,0);
-    if(n < 5 || !Number.isInteger(n)) return;
+    let n = Number.parseInt(e.target.value,0);
     dispatch(changeDelay(n));
   }
 }
