@@ -18,14 +18,14 @@ export function toggleNotification(){
 
 export function changeDelay(delay){
   return {
+    delay,
     type : CHANGE_DELAY,
-    delay
   }
 }
 
 export function callNotification(message){
   return{
+    message,
     type : CALL_NOTIFICATION,
-    message
   }
 }

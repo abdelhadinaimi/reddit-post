@@ -6,9 +6,9 @@ import errorMessage from "./errorReducer";
 import utilReducer from "./utilReducer";
 
 const reducer = combineReducers({
+  errors: errorMessage,
   postsBySubreddit,
   settings: settingsReducer,
-  errors: errorMessage,
   utils: utilReducer
 });
 

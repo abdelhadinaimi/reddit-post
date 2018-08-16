@@ -8,36 +8,38 @@ export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
 export const REQUEST_POSTS = "REQUEST_POSTS";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 
-export function invalidateSubreddit(subreddit) {
+export function invalidateSubreddit(subreddit : string) {
   return {
-    type: INVALIDATE_SUBREDDIT,
-    subreddit
-  };
-}
-
-function requestPosts(subreddit) {
-  return {
-    type: REQUEST_POSTS,
-    subreddit
-  };
-}
-
-function receivePosts(subreddit, json) {
-  return {
-    type: RECEIVE_POSTS,
     subreddit,
-    posts: json.data.children.map(child => child.data),
-    receivedAt: Date.now()
+    type: INVALIDATE_SUBREDDIT
   };
 }
 
-export function fetchPosts(subreddit) {
-  return function(dispatch) {
+function requestPosts(subreddit : string) {
+  return {
+    subreddit,
+    type: REQUEST_POSTS
+  };
+}
+
+function receivePosts(subreddit : string, json : any) {
+  return {
+    posts: json.data.children.map((child : any) => child.data),
+    receivedAt: Date.now(),
+    subreddit,
+    type: RECEIVE_POSTS
+  };
+}
+
+export function fetchPosts(subreddit : string) {
+  return (dispatch : (action : any) => void)  => {
     dispatch(requestPosts(subreddit));
 
     return fetch(`https://www.reddit.com/r/${subreddit}/new.json`)
       .then(response => {
-        if (response.ok) return response.json();
+        if (response.ok) {
+          return response.json();
+        }
 
         throw new Error(response.statusText);
       })
@@ -51,7 +53,7 @@ export function fetchPosts(subreddit) {
   };
 }
 
-function shouldFetchPosts(state, subreddit) {
+function shouldFetchPosts(state : any, subreddit : string) {
   const posts = state.postsBySubreddit[subreddit];
   if (!posts) {
     return true;
@@ -61,8 +63,8 @@ function shouldFetchPosts(state, subreddit) {
     return posts.didInvalidate;
   }
 }
-export function fetchPostsIfNeeded(subreddit) {
-  return (dispatch, getState) => {
+export function fetchPostsIfNeeded(subreddit : string) {
+  return (dispatch : (action : any) => void, getState : () => any) => {
     dispatch(resetErrorMessage());
     if (shouldFetchPosts(getState(), subreddit)) {
       // Dispatch a thunk from thunk!

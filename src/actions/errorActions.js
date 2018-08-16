@@ -6,20 +6,20 @@ export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
 
 export function addSubredditError(error) {
   return {
+    error,
     type: ADD_SUBREDDIT_ERROR,
-    error
   }
 }
 export function fetchError(error) {
   return {
+    error,
     type: FETCH_ERROR,
-    error
   }
 }
 export function subredditExistError(error) {
   return {
+    error,
     type: SUBREDDIT_EXIST_ERROR,
-    error
   }
 }
 export function resetErrorMessage() {
@@ -29,7 +29,7 @@ export function resetErrorMessage() {
 }
 export function fetchSubredditError(subreddit){
   return {
+    subreddit,
     type: FETCH_SUBREDDIT_ERROR,
-    subreddit
   }
 }
