@@ -9,7 +9,7 @@ import {
   toggleSound
 } from "../actions/settingsActions";
 import { closeSettingsModal } from "../actions/utilActions";
-import { IState } from "../interfaces";
+import { IState } from "../types/interfaces";
 
 interface IProps {
   showModal: any;

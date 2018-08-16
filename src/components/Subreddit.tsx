@@ -3,8 +3,8 @@ import React from "react";
 
 import Post from "./Post";
 
-import { IPost, IPostBySubreddit, ISettings } from "../interfaces";
 import notification from "../media/notification.mp3";
+import { IPost, IPostBySubreddit, ISettings } from "../types/interfaces";
 
 interface IProps {
   reddit : IPostBySubreddit;

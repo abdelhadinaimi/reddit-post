@@ -6,12 +6,12 @@ export interface IPost {
 }
 
 // a
-export interface IReddit {
-  posts: IPost[];
-  receivedAt: number;
-  subreddit: string;
-  type: string;
-}
+// export interface IReddit {
+//   posts: IPost[];
+//   receivedAt: number;
+//   subreddit: string;
+//   type: string;
+// }
 
 export interface IPostBySubreddit {
   didInvalidate: boolean;
@@ -42,4 +42,3 @@ export interface IState {
   settings : ISettings;
   utils : IUtils;
 }
-export type DispatchFunc = (action: any) => void;

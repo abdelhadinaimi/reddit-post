@@ -1,3 +1,4 @@
+import { ISubredditAction } from "../types/actions";
 import {
   fetchError,
   fetchSubredditError,
@@ -8,31 +9,31 @@ export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
 export const REQUEST_POSTS = "REQUEST_POSTS";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 
-export function invalidateSubreddit(subreddit : string) {
+export function invalidateSubreddit(subreddit: string): ISubredditAction {
   return {
     subreddit,
     type: INVALIDATE_SUBREDDIT
   };
 }
 
-function requestPosts(subreddit : string) {
+function requestPosts(subreddit: string): ISubredditAction {
   return {
     subreddit,
     type: REQUEST_POSTS
   };
 }
 
-function receivePosts(subreddit : string, json : any) {
+function receivePosts(subreddit: string, json: any) {
   return {
-    posts: json.data.children.map((child : any) => child.data),
+    posts: json.data.children.map((child: any) => child.data),
     receivedAt: Date.now(),
     subreddit,
     type: RECEIVE_POSTS
   };
 }
 
-export function fetchPosts(subreddit : string) {
-  return (dispatch : (action : any) => void)  => {
+export function fetchPosts(subreddit: string) {
+  return (dispatch: (action: any) => void) => {
     dispatch(requestPosts(subreddit));
 
     return fetch(`https://www.reddit.com/r/${subreddit}/new.json`)
@@ -53,7 +54,7 @@ export function fetchPosts(subreddit : string) {
   };
 }
 
-function shouldFetchPosts(state : any, subreddit : string) {
+function shouldFetchPosts(state: any, subreddit: string) : boolean{
   const posts = state.postsBySubreddit[subreddit];
   if (!posts) {
     return true;
@@ -63,8 +64,8 @@ function shouldFetchPosts(state : any, subreddit : string) {
     return posts.didInvalidate;
   }
 }
-export function fetchPostsIfNeeded(subreddit : string) {
-  return (dispatch : (action : any) => void, getState : () => any) => {
+export function fetchPostsIfNeeded(subreddit: string) {
+  return (dispatch: (action: any) => void, getState: () => any) => {
     dispatch(resetErrorMessage());
     if (shouldFetchPosts(getState(), subreddit)) {
       // Dispatch a thunk from thunk!

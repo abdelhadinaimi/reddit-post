@@ -10,7 +10,7 @@ import {
 
 import { Dispatch } from "redux";
 import { removeSubreddit } from "../actions/listActions";
-import { IPostsBySubreddit, ISettings, IState } from "../interfaces";
+import { IPostsBySubreddit, ISettings, IState } from "../types/interfaces";
 
 interface IProps {
   postsBySubreddit: IPostsBySubreddit;

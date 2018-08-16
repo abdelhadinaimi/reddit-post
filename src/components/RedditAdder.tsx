@@ -1,10 +1,10 @@
 import React, { FormEvent } from "react";
 import { connect } from "react-redux";
 
+import { Dispatch } from "redux";
 import { fetchPostsIfNeeded } from "../actions/redditActions";
 import { openSettingsModal } from "../actions/utilActions";
 
-import { DispatchFunc } from "../interfaces";
 const regex = new RegExp("^[A-Za-z0-9][A-Za-z0-9_]{1,20}$"); // subreddit naming convention
 
 const ErrorMessage = (message: any, closeError: any) => (
@@ -32,22 +32,27 @@ const ErrorMessage = (message: any, closeError: any) => (
   </div>
 );
 
-interface IProps {
-  dispatch: DispatchFunc;
+interface IDispatchProps {
+  handleOpenSettingsModal: () => void;
+  handleSubmit: (subreddit: string) => void;
 }
+interface IState {
+  error : string;
+  value : string;
+}
+type Props = IDispatchProps;
+class RedditAdder extends React.Component<Props,IState> {
 
-class RedditAdder extends React.Component<IProps> {
-  public state = {
-    error: "",
-    value: ""
-  };
-  
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
-    this.handleOpenSettingsModal = this.handleOpenSettingsModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clearError = this.clearError.bind(this);
+
+    this.state = {
+      error: "",
+      value: ""
+    };
   }
 
   public render() {
@@ -73,7 +78,7 @@ class RedditAdder extends React.Component<IProps> {
               className="btn btn-default"
               type="button"
               style={{ border: "1px solid #cccccc", borderLeft: "0px" }}
-              onClick={this.handleOpenSettingsModal}
+              onClick={this.props.handleOpenSettingsModal}
             >
               <span className="glyphicon glyphicon-cog" />
             </button>
@@ -89,14 +94,8 @@ class RedditAdder extends React.Component<IProps> {
     );
   }
 
-  public handleOpenSettingsModal() {
-    const { dispatch } = this.props;
-    dispatch(openSettingsModal());
-  }
-
   public handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const { dispatch } = this.props;
     if (this.state.value.length > 21) {
       this.setState({ error: "Subreddit must be 21 or less characters" });
     } else if (!regex.test(this.state.value)) {
@@ -104,13 +103,13 @@ class RedditAdder extends React.Component<IProps> {
         error: "Subreddit must contain only characters, numbers and _"
       });
     } else {
-      dispatch(fetchPostsIfNeeded(this.state.value));
+      this.props.handleSubmit(this.state.value);
       this.clearError();
     }
     this.setState({ value: "" });
   }
 
-  public handleChange(e: any){
+  public handleChange(e: any) {
     this.setState({ value: e.target.value });
   }
 
@@ -118,5 +117,12 @@ class RedditAdder extends React.Component<IProps> {
     this.setState({ error: "" });
   }
 }
-
-export default connect(null)(RedditAdder);
+const mapDispatchToProps = (dispatch: Dispatch<any>): IDispatchProps => ({
+  handleOpenSettingsModal: () => {
+    dispatch(openSettingsModal());
+  },
+  handleSubmit: subreddit => {
+    dispatch(fetchPostsIfNeeded(subreddit));
+  }
+});
+export default connect<null,IDispatchProps>(null,mapDispatchToProps)(RedditAdder);

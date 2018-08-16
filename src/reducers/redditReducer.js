@@ -1,8 +1,4 @@
-import {
-  INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS,
-  RECEIVE_POSTS
-} from "../actions/redditActions";
+import { INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from "../actions/redditActions";
 import { REMOVE_SUBREDDIT } from "../actions/listActions";
 import { FETCH_SUBREDDIT_ERROR } from "../actions/errorActions";
 
@@ -34,8 +30,7 @@ function posts(state = defaultState, action) {
       return Object.assign({}, state, {
         didInvalidate: false,
         error: false,
-        hasNewPost:
-          state.items.length !== 0 && action.posts[0].id !== state.items[0].id,
+        hasNewPost: state.items.length !== 0 && action.posts[0].id !== state.items[0].id,
         isFetching: false,
         items: action.posts,
         lastUpdated: action.receivedAt
