@@ -1,9 +1,22 @@
 import { Action } from "redux";
 
 export interface IErrorAction extends Action {
-  error : string;
+  error: string;
 }
 
 export interface ISubredditAction extends Action {
-  subreddit : string;
+  subreddit: string;
+}
+
+export interface IDelayAction extends Action {
+  delay: number;
+}
+
+export interface INotificationAction extends Action {
+  message: string;
+}
+
+export interface IPostAction extends ISubredditAction {
+  posts: any;
+  receivedAt: number;
 }

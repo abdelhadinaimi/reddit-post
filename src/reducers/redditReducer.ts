@@ -1,17 +1,21 @@
-import { INVALIDATE_SUBREDDIT, REQUEST_POSTS, RECEIVE_POSTS } from "../actions/redditActions";
-import { REMOVE_SUBREDDIT } from "../actions/listActions";
 import { FETCH_SUBREDDIT_ERROR } from "../actions/errorActions";
+import { REMOVE_SUBREDDIT } from "../actions/listActions";
+import { INVALIDATE_SUBREDDIT,RECEIVE_POSTS,REQUEST_POSTS} from "../actions/redditActions";
+import { IPostAction, ISubredditAction } from "../types/actions";
+import { IPostBySubreddit, IPostsBySubreddit } from "../types/interfaces";
 
-const defaultState = {
+type redditAction = IPostAction & ISubredditAction;
+// Default state for a single subreddit
+const defaultPostsState : IPostBySubreddit = {
   didInvalidate: false,
   error: false,
   hasNewPost: false,
   isFetching: false,
-  items: []
+  items: [],
+  lastUpdated : 0
 };
 
-/* Reducer for a post in the posts array of our state*/
-function posts(state = defaultState, action) {
+function postBySubreddit(state = defaultPostsState, action : redditAction) : IPostBySubreddit{
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
       return Object.assign({}, state, {
@@ -27,6 +31,7 @@ function posts(state = defaultState, action) {
         isFetching: true
       });
     case RECEIVE_POSTS:
+    
       return Object.assign({}, state, {
         didInvalidate: false,
         error: false,
@@ -45,19 +50,20 @@ function posts(state = defaultState, action) {
   }
 }
 
+const defaultState : IPostsBySubreddit = {};
 /* Reducer for every post in the posts array of our state*/
-export default function postsBySubreddit(state = {}, action) {
+export default function postsBySubreddit(state = defaultState, action : redditAction) : IPostsBySubreddit{
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
       if (!state[action.subreddit]) {
-        //this is if we receive a post and the the object does not exist we return the state.
+        // this is if we receive a post and the the object does not exist we return the state.
         return state;
       }
     case REQUEST_POSTS:
     case FETCH_SUBREDDIT_ERROR:
       return Object.assign({}, state, {
-        [action.subreddit]: posts(state[action.subreddit], action)
+        [action.subreddit]: postBySubreddit(state[action.subreddit], action)
       });
     case REMOVE_SUBREDDIT: {
       const newState = Object.assign({}, state);

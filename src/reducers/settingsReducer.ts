@@ -1,16 +1,20 @@
 import {
-  TOGGLE_SOUND,
+  CHANGE_DELAY,
   TOGGLE_NOTIFICATION,
-  CHANGE_DELAY
+  TOGGLE_SOUND
 } from "../actions/settingsActions";
+import { IDelayAction, INotificationAction } from "../types/actions";
+import { ISettings } from "../types/interfaces";
 
-const defaultState = {
+type settingsAction = IDelayAction & INotificationAction;
+
+const defaultState: ISettings= {
   delay: 5,
   notification: false,
   sound: false
 };
 
-export default function settingsReducer(state = defaultState, action) {
+export default function settingsReducer(state = defaultState, action: settingsAction): ISettings{
   switch (action.type) {
     case TOGGLE_SOUND:
       return Object.assign({}, state, { sound: !state.sound });

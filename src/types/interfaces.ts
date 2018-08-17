@@ -5,14 +5,6 @@ export interface IPost {
   title: string;
 }
 
-// a
-// export interface IReddit {
-//   posts: IPost[];
-//   receivedAt: number;
-//   subreddit: string;
-//   type: string;
-// }
-
 export interface IPostBySubreddit {
   didInvalidate: boolean;
   error: boolean;
@@ -38,7 +30,7 @@ export interface IPostsBySubreddit  {
 
 export interface IState {
   errors: string; // TODO Expand the error object
-  postsBySubreddit: IPostsBySubreddit
-  settings : ISettings;
-  utils : IUtils;
+  postsBySubreddit: IPostsBySubreddit | {};
+  settings: ISettings;
+  utils: IUtils;
 }

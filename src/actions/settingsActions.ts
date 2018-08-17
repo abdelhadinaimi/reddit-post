@@ -1,4 +1,5 @@
 import { Action } from "redux";
+import { IDelayAction, INotificationAction } from "../types/actions";
 
 export const TOGGLE_SOUND = "TOGGLE_SOUND";
 export const TOGGLE_NOTIFICATION = "TOGGLE_NOTIFICATION";
@@ -17,14 +18,14 @@ export function toggleNotification(): Action {
   };
 }
 
-export function changeDelay(delay: number) {
+export function changeDelay(delay: number): IDelayAction {
   return {
     delay,
     type: CHANGE_DELAY
   };
 }
 
-export function callNotification(message: string) {
+export function callNotification(message: string): INotificationAction {
   return {
     message,
     type: CALL_NOTIFICATION

@@ -5,6 +5,7 @@
   "private": true,
   "main": "src/index.tsx",
   "dependencies": {
+    "@types/redux-logger": "^3.0.6",
     "lodash": "^4.17.4",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",

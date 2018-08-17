@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
+import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
+import thunkMiddleware from "redux-thunk";
 
 import { fetchPostsIfNeeded } from "./actions/redditActions";
 import reducer from "./reducers/reducer";
@@ -15,7 +15,8 @@ const store = createStore(
   )
 );
 
-//Initilizing the app with the r/all subreddit
+// Initilizing the app with the r/all subreddit
+// TODO Store the subreddits in memory for next time the users launches the app
 store.dispatch(fetchPostsIfNeeded("all"));
 
 export default store;

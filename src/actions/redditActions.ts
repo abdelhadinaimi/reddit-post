@@ -1,4 +1,4 @@
-import { ISubredditAction } from "../types/actions";
+import { IPostAction, ISubredditAction } from "../types/actions";
 import {
   fetchError,
   fetchSubredditError,
@@ -23,7 +23,7 @@ function requestPosts(subreddit: string): ISubredditAction {
   };
 }
 
-function receivePosts(subreddit: string, json: any) {
+function receivePosts(subreddit: string, json: any): IPostAction {
   return {
     posts: json.data.children.map((child: any) => child.data),
     receivedAt: Date.now(),
@@ -54,7 +54,7 @@ export function fetchPosts(subreddit: string) {
   };
 }
 
-function shouldFetchPosts(state: any, subreddit: string) : boolean{
+function shouldFetchPosts(state: any, subreddit: string): boolean {
   const posts = state.postsBySubreddit[subreddit];
   if (!posts) {
     return true;
