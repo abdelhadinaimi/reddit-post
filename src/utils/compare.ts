@@ -1,3 +1,5 @@
-export function isEqual(a,b){
+
+
+export function isEqual(a : any[],b : any[]){
   return a.length===b.length && a.every((v,i)=> v === b[i]);
 }
