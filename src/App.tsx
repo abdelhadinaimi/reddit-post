@@ -1,7 +1,8 @@
 import * as React from 'react';
-import RedditAdder from './components/RedditAdder';
-import SettingsModal from './components/SettingsModal';
-import SubredditList from './components/SubredditList';
+
+import RedditAdder from './containers/RedditAdder';
+import SettingsModal from './containers/SettingsModal';
+import SubredditList from './containers/SubredditList';
 
 import './styles/App.css';
 

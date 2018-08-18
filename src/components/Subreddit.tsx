@@ -1,80 +1,64 @@
-import { throttle } from "lodash";
 import React from "react";
 
 import Post from "./Post";
 
-import notification from "../media/notification.mp3";
 import { IPost, IPostBySubreddit, ISettings } from "../types/interfaces";
 
-interface IProps {
-  reddit : IPostBySubreddit;
-  title : string;
-  settings : ISettings;
-  onReload : any;
-  onRemove : any;
+interface IOwnProps {
+  reddit: IPostBySubreddit;
+  title: string;
+  settings: ISettings;
+  onReload: any;
+  onRemove: any;
+  callNotification?: any;
+  playAudio?: any;
 }
 interface IState {
-  callNotification : () => void;
-  collapsed : boolean;
-  openedNewPost : boolean;
-  playAudio : () => void;
+  collapsed: boolean;
+  openedNewPost: boolean;
 }
-class Subreddit extends React.Component<IProps,IState> {
-  constructor(props : IProps) {
-    super(props);
 
-    const callNotification = throttle(() => {
-      const notif = new Notification("New Post(s) !", {
-        body: "New post(s) from r/" + this.props.title
-      });
-      notif.onclick = () => {
-        window.focus();
-      };
-    }, 5000);
+type Props = IOwnProps;
 
-    const audio = new Audio(notification);
-    const playAudio = throttle(() => {
-      audio.play();
-    });
+class Subreddit extends React.Component<Props, IState> {
+  constructor(props: Props) {
+    super(props);   
     this.state = {
-      callNotification,
       collapsed: true,
       openedNewPost: false,
-      playAudio,
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  public componentWillReceiveProps(nextProps : IProps) {
+  public componentWillReceiveProps(nextProps: Props) {
+    const { playAudio, callNotification, settings} = nextProps;
     if (nextProps.reddit.hasNewPost) {
       this.setState({
         openedNewPost: false
       });
 
-      if (nextProps.settings.notification) {
-        this.state.callNotification();
+      if (settings.notification && callNotification) {
+        callNotification();
       }
-      if (nextProps.settings.sound) {
-        this.state.playAudio();
+      
+      if (settings.sound && playAudio) {
+        playAudio();
       }
     }
   }
 
   public render() {
-    const posts = this.props.reddit.items.map((item : IPost)  => (
-      <Post key={item.id} {...item}/>
+    const posts = this.props.reddit.items.map((item: IPost) => (
+      <Post key={item.id} {...item} />
     ));
-    const { isFetching, error, hasNewPost} = this.props.reddit;
+    const { isFetching, error, hasNewPost } = this.props.reddit;
     const { onReload, onRemove } = this.props;
     const { openedNewPost } = this.state;
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
           <h4 className="panel-title">
-            <a
-              onClick={this.handleClick}
-              style={{ cursor: "pointer" }}
-            >
+            <a onClick={this.handleClick} style={{ cursor: "pointer" }}>
               {this.props.title}
             </a>
           </h4>
@@ -135,6 +119,5 @@ class Subreddit extends React.Component<IProps,IState> {
     }));
   }
 }
-
 
 export default Subreddit;
