@@ -9,13 +9,13 @@ import {
 } from "../actions/settingsActions";
 import { closeSettingsModal } from "../actions/utilActions";
 
-import { IState } from "../types/interfaces";
+import { ISettings, IState } from "../types/interfaces";
 
 import SettingsModalComponent from "../components/SettingsModal";
 
 interface IStateProps {
-  showModal: any;
-  settings: any;
+  showModal: boolean;
+  settings: ISettings;
 }
 
 interface IOwnState {

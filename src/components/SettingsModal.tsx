@@ -1,13 +1,14 @@
 import React from "react";
 import { Checkbox, FormGroup, Modal } from "react-bootstrap";
+import { ISettings } from "../types/interfaces";
 
 interface IProps {
   handleChangeDelay: (e: Event & any) => void;
   handleCloseSettingsModal: () => void;
   handleToggleNotification: () => void;
   handleToggleSound: () => void;
-  showModal: any;
-  settings: any;
+  showModal: boolean;
+  settings: ISettings;
   permission: string;
 }
 
