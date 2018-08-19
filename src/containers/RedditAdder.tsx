@@ -1,7 +1,9 @@
 import React, { FormEvent } from "react";
 import { connect } from "react-redux";
-
 import { Dispatch } from "redux";
+
+
+import { addSubreddit } from "../actions/listActions";
 import { fetchPostsIfNeeded } from "../actions/redditActions";
 import { openSettingsModal } from "../actions/utilActions";
 
@@ -74,6 +76,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): IDispatchProps => ({
     dispatch(openSettingsModal());
   },
   handleSubmit: subreddit => {
+    dispatch(addSubreddit(subreddit));
     dispatch(fetchPostsIfNeeded(subreddit));
   }
 });

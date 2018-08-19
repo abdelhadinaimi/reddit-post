@@ -1,5 +1,5 @@
 import { FETCH_SUBREDDIT_ERROR } from "../actions/errorActions";
-import { REMOVE_SUBREDDIT } from "../actions/listActions";
+import { ADD_SUBREDDIT, REMOVE_SUBREDDIT } from "../actions/listActions";
 import { INVALIDATE_SUBREDDIT,RECEIVE_POSTS,REQUEST_POSTS} from "../actions/redditActions";
 import { IPostAction, ISubredditAction } from "../types/actions";
 import { IPostBySubreddit, IPostsBySubreddit } from "../types/interfaces";
@@ -12,7 +12,7 @@ const defaultPostsState : IPostBySubreddit = {
   hasNewPost: false,
   isFetching: false,
   items: [],
-  lastUpdated : 0
+  lastUpdated : Date.now()
 };
 
 function postBySubreddit(state = defaultPostsState, action : redditAction) : IPostBySubreddit{
@@ -31,7 +31,6 @@ function postBySubreddit(state = defaultPostsState, action : redditAction) : IPo
         isFetching: true
       });
     case RECEIVE_POSTS:
-    
       return Object.assign({}, state, {
         didInvalidate: false,
         error: false,
@@ -56,12 +55,13 @@ export default function postsBySubreddit(state = defaultState, action : redditAc
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
+    case FETCH_SUBREDDIT_ERROR:
+    case REQUEST_POSTS:
       if (!state[action.subreddit]) {
-        // this is if we receive a post and the the object does not exist we return the state.
+        // if we receive an action and the subreddit does not exist we return the state.
         return state;
       }
-    case REQUEST_POSTS:
-    case FETCH_SUBREDDIT_ERROR:
+    case ADD_SUBREDDIT :
       return Object.assign({}, state, {
         [action.subreddit]: postBySubreddit(state[action.subreddit], action)
       });

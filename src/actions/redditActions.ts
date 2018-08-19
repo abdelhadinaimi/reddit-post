@@ -1,9 +1,6 @@
 import { IPostAction, ISubredditAction } from "../types/actions";
-import {
-  fetchError,
-  fetchSubredditError,
-  resetErrorMessage
-} from "./errorActions";
+import { IState } from "../types/interfaces";
+import { fetchSubredditError, resetErrorMessage } from "./errorActions";
 
 export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
 export const REQUEST_POSTS = "REQUEST_POSTS";
@@ -23,16 +20,16 @@ function requestPosts(subreddit: string): ISubredditAction {
   };
 }
 
-function receivePosts(subreddit: string, json: any): IPostAction {
+function receivePosts(subreddit: string, posts: any[]): IPostAction {
   return {
-    posts: json.data.children.map((child: any) => child.data),
+    posts,
     receivedAt: Date.now(),
     subreddit,
     type: RECEIVE_POSTS
   };
 }
 
-export function fetchPosts(subreddit: string) {
+function fetchPosts(subreddit: string) {
   return (dispatch: (action: any) => void) => {
     dispatch(requestPosts(subreddit));
 
@@ -45,33 +42,35 @@ export function fetchPosts(subreddit: string) {
         throw new Error(response.statusText);
       })
       .then(json => {
-        dispatch(receivePosts(subreddit, json));
+        dispatch(receivePosts(subreddit, json.data.children.map((child: any) => child.data)));
       })
       .catch(err => {
-        dispatch(fetchError(err.message));
         dispatch(fetchSubredditError(subreddit));
       });
   };
 }
 
-function shouldFetchPosts(state: any, subreddit: string): boolean {
-  const posts = state.postsBySubreddit[subreddit];
-  if (!posts) {
+function shouldFetchPosts(state: IState, subreddit: string): boolean {
+  const post = state.postsBySubreddit[subreddit];
+
+  if (post.items.length === 0) {
+    // the subreddit didn't fetch yet
     return true;
-  } else if (posts.isFetching) {
+  } else if (post.isFetching) {
+    // the subreddit is in the middle of a fetch request
     return false;
   } else {
-    return posts.didInvalidate;
+    // the subreddit is in need of fetching
+    return post.didInvalidate;
   }
 }
 export function fetchPostsIfNeeded(subreddit: string) {
+  
   return (dispatch: (action: any) => void, getState: () => any) => {
     dispatch(resetErrorMessage());
+
     if (shouldFetchPosts(getState(), subreddit)) {
-      // Dispatch a thunk from thunk!
-      return dispatch(fetchPosts(subreddit));
-    } else {
-      return Promise.resolve();
+      dispatch(fetchPosts(subreddit));
     }
   };
 }

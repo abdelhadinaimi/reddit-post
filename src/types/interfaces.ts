@@ -30,7 +30,7 @@ export interface IPostsBySubreddit  {
 
 export interface IState {
   errors: string; // TODO Expand the error object
-  postsBySubreddit: IPostsBySubreddit | {};
+  postsBySubreddit: IPostsBySubreddit;
   settings: ISettings;
   utils: IUtils;
 }
