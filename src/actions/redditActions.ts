@@ -13,14 +13,14 @@ export function invalidateSubreddit(subreddit: string): ISubredditAction {
   };
 }
 
-export function requestPosts(subreddit: string): ISubredditAction {
+function requestPosts(subreddit: string): ISubredditAction {
   return {
     subreddit,
     type: REQUEST_POSTS
   };
 }
 
-export function receivePosts(subreddit: string, posts: IPost[]): IPostAction {
+function receivePosts(subreddit: string, posts: IPost[]): IPostAction {
   return {
     posts,
     receivedAt: Date.now(),
@@ -29,7 +29,7 @@ export function receivePosts(subreddit: string, posts: IPost[]): IPostAction {
   };
 }
 
-export function fetchPosts(subreddit: string) {
+ function fetchPosts(subreddit: string) {
   return (dispatch: (action: any) => void) => {
     dispatch(requestPosts(subreddit));
 
@@ -56,23 +56,26 @@ export function fetchPosts(subreddit: string) {
 function shouldFetchPosts(state: IState, subreddit: string): boolean {
   const post = state.postsBySubreddit[subreddit];
 
-  if (post.items.length === 0) {
+  if (post.isFetching) {
     // the subreddit didn't fetch yet
-    return true;
-  } else if (post.isFetching) {
-    // the subreddit is in the middle of a fetch request
     return false;
+  } else if (post.items.length === 0) {
+    // the subreddit is in the middle of a fetch request
+    return true;
   } else {
     // the subreddit is in need of fetching
     return post.didInvalidate;
   }
 }
 export function fetchPostsIfNeeded(subreddit: string) {
-  return (dispatch: (action: any) => void, getState: () => any) => {
+  return (dispatch: (action: any) => Promise<any>, getState: () => any) => {
     dispatch(resetErrorMessage());
 
     if (shouldFetchPosts(getState(), subreddit)) {
-      dispatch(fetchPosts(subreddit));
+      return dispatch(fetchPosts(subreddit));
     }
+    
+    return Promise.resolve();
+    
   };
 }

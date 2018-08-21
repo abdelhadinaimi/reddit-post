@@ -2,15 +2,16 @@ import * as fetchMock from 'fetch-mock'
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
+import { RESET_ERROR_MESSAGE } from '../../src/actions/errorActions';
 import {
-  fetchPosts,
+  fetchPostsIfNeeded,
   INVALIDATE_SUBREDDIT,
   invalidateSubreddit,
   RECEIVE_POSTS,
-  receivePosts,
   REQUEST_POSTS,
-  requestPosts,
 } from "../../src/actions/redditActions";
+
+import { AnyAction } from 'redux';
 import { IPostBySubreddit } from "../../src/types/interfaces";
 
 const mockStore = configureMockStore([thunk]);
@@ -36,25 +37,6 @@ describe("simple actions", () => {
     };
     expect(invalidateSubreddit(subreddit)).toEqual(expectedAction);
   });
-  
-  it("requestPosts() should create an action to request subreddit data", () => {
-    const expectedAction = {
-      subreddit,
-      type: REQUEST_POSTS
-    };
-    expect(requestPosts(subreddit)).toEqual(expectedAction);
-  });
-
-  it("receivePosts() should create an action to request subreddit data", () => {
-    const posts = children.map(child => child.data);
-    const expectedAction = {
-      posts,
-      receivedAt: now,
-      subreddit,
-      type: RECEIVE_POSTS
-    };
-    expect(receivePosts(subreddit,posts)).toEqual(expectedAction);
-  });
 });
 
 const defaultPostsState: IPostBySubreddit = {
@@ -66,16 +48,36 @@ const defaultPostsState: IPostBySubreddit = {
   lastUpdated: 0
 };
 
-describe("thunk actions", () => {
-  beforeEach(() => {
-    fetchMock.restore();
-  });
+describe("fetchPostsIfNeeded()", () => {
+  fetchMock.mock(`https://www.reddit.com/r/${subreddit}/new.json`,{ body:{data:{children}}});
+  // beforeEach(() => {
+  //   fetchMock.restore();
+  // });
 
-  it("fetchPosts() should create RECEIVE_POSTS action when the fetch is done", () => {
+  /**
+   * Runs a expect().toEqual test to see if expectedActions is equal to store.getActions() 
+   */
+  const expectActionsTobe = (expectedActions : AnyAction[],mockedStore : any) => {
+    const store = mockStore(mockedStore);
+    return fetchPostsIfNeeded(subreddit)(store.dispatch,store.getState).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  }
+
+  /**
+   * Takes successConditions mutates them to the state and tests them with expectActionsTobe()
+   */
+  const runConditionsOnExpectedActions = (successConditions : any[]) => 
+  (expectedActions : AnyAction[],mockedStore : any) => successConditions.map(e => {
+      const cStore = {...mockedStore};
+      cStore.postsBySubreddit.all = Object.assign({},defaultPostsState, e);
+      return expectActionsTobe(expectedActions,cStore);
+    });
     
-    fetchMock.mock(`https://www.reddit.com/r/${subreddit}/new.json`,{ body:{data:{children}}});
+  it("should return a RECEIVE_POSTS if the subreddit needs to be fetched",() => {
 
     const expectedActions = [
+      { type: RESET_ERROR_MESSAGE },
       { type: REQUEST_POSTS, subreddit },
       {
         posts: children.map(child => child.data),
@@ -84,14 +86,27 @@ describe("thunk actions", () => {
         type: RECEIVE_POSTS
       }
     ];
-    const store = mockStore({
+    const store = {
       postsBySubreddit: {
         all: defaultPostsState
       }
-    });
-    
-    return fetchPosts(subreddit)(store.dispatch).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    };
+    const successConditions = [,{didInvalidate: true, items: [1]}];
+    const promiseMap = runConditionsOnExpectedActions(successConditions)(expectedActions,store);
+    return Promise.all(promiseMap);
+  });
+
+  it("should only dispatch RESET_ERROR_MESSAGE if it doesn't need to be fetched",() => {
+    const expectedActions = [ { type: RESET_ERROR_MESSAGE}];
+
+    const store = {
+      postsBySubreddit: {
+        all: defaultPostsState
+      }
+    };
+    // if it is fetching or if there is something in the array and didInvalidate is false
+    const successConditions = [{isFetching: true},{items:[1]}];
+    const promiseMap = runConditionsOnExpectedActions(successConditions)(expectedActions,store);
+    return Promise.all(promiseMap);
   });
 });
