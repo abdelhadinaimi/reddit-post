@@ -20,3 +20,6 @@ export interface IPostAction extends ISubredditAction {
   posts: any;
   receivedAt: number;
 }
+
+export type redditAction = IPostAction & ISubredditAction;
+

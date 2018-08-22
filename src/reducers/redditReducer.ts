@@ -1,10 +1,9 @@
 import { ADD_SUBREDDIT, REMOVE_SUBREDDIT } from "../actions/listActions";
 import { FETCH_SUBREDDIT_ERROR,INVALIDATE_SUBREDDIT,RECEIVE_POSTS,REQUEST_POSTS} from "../actions/redditActions";
-import { IPostAction, ISubredditAction } from "../types/actions";
 
+import { redditAction } from "../types/actions";
 import { IPostBySubreddit, IPostsBySubreddit } from "../types/interfaces";
 
-type redditAction = IPostAction & ISubredditAction;
 // Default state for a single subreddit
 const defaultPostsState : IPostBySubreddit = {
   didInvalidate: false,
@@ -12,7 +11,7 @@ const defaultPostsState : IPostBySubreddit = {
   hasNewPost: false,
   isFetching: false,
   items: [],
-  lastUpdated : Date.now()
+  lastUpdated : 0
 };
 
 function postBySubreddit(state = defaultPostsState, action : redditAction) : IPostBySubreddit{
@@ -54,9 +53,9 @@ const defaultState : IPostsBySubreddit = {};
 export default function postsBySubreddit(state = defaultState, action : redditAction) : IPostsBySubreddit{
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
+    case REQUEST_POSTS:
     case RECEIVE_POSTS:
     case FETCH_SUBREDDIT_ERROR:
-    case REQUEST_POSTS:
       if (!state[action.subreddit]) {
         // if we receive an action and the subreddit does not exist we return the state.
         return state;
