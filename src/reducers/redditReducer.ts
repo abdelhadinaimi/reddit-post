@@ -1,7 +1,7 @@
-import { FETCH_SUBREDDIT_ERROR } from "../actions/errorActions";
 import { ADD_SUBREDDIT, REMOVE_SUBREDDIT } from "../actions/listActions";
-import { INVALIDATE_SUBREDDIT,RECEIVE_POSTS,REQUEST_POSTS} from "../actions/redditActions";
+import { FETCH_SUBREDDIT_ERROR,INVALIDATE_SUBREDDIT,RECEIVE_POSTS,REQUEST_POSTS} from "../actions/redditActions";
 import { IPostAction, ISubredditAction } from "../types/actions";
+
 import { IPostBySubreddit, IPostsBySubreddit } from "../types/interfaces";
 
 type redditAction = IPostAction & ISubredditAction;

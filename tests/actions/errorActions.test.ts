@@ -7,13 +7,4 @@ describe("actions", () => {
     }
     expect(actions.resetErrorMessage()).toEqual(expectedAction);
   });
-
-  it("should create an action that means an error while fetching happened", () => {
-    const subreddit = "all";
-    const expectedAction = {
-      subreddit,
-      type : actions.FETCH_SUBREDDIT_ERROR,
-    }
-    expect(actions.fetchSubredditError(subreddit)).toEqual(expectedAction);
-  });
 });

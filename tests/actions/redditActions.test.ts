@@ -3,11 +3,12 @@ import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
 import {
-  FETCH_SUBREDDIT_ERROR,
   RESET_ERROR_MESSAGE
 } from "../../src/actions/errorActions";
 import {
+  FETCH_SUBREDDIT_ERROR,
   fetchPostsIfNeeded,
+  fetchSubredditError,
   INVALIDATE_SUBREDDIT,
   invalidateSubreddit,
   RECEIVE_POSTS,
@@ -39,6 +40,13 @@ describe("simple actions", () => {
       type: INVALIDATE_SUBREDDIT
     };
     expect(invalidateSubreddit(subreddit)).toEqual(expectedAction);
+  });
+  it("fetchSubredditError() should create an action that means an error while fetching happened", () => {
+    const expectedAction = {
+      subreddit,
+      type : FETCH_SUBREDDIT_ERROR,
+    }
+    expect(fetchSubredditError(subreddit)).toEqual(expectedAction);
   });
 });
 
