@@ -1,9 +1,5 @@
 // global.fetch = require('jest-fetch-mock');
+var enzyme = require('enzyme');
+var Adapter = require('enzyme-adapter-react-15');
 
-const constantDate = new Date(0);
-
-Date = class extends Date {
-  constructor() {
-    return constantDate
-  }
-}
+enzyme.configure({ adapter: new Adapter() });
