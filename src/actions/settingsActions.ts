@@ -24,10 +24,3 @@ export function changeDelay(delay: number): IDelayAction {
     type: CHANGE_DELAY
   };
 }
-
-export function callNotification(message: string): INotificationAction {
-  return {
-    message,
-    type: CALL_NOTIFICATION
-  };
-}

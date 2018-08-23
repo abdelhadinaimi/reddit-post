@@ -22,12 +22,4 @@ describe("actions", () => {
     };
     expect(actions.changeDelay(5)).toEqual(expectedAction);
   });
-
-  it("should create an action to call the notification API", () => {
-    const expectedAction = {
-      message: "hello",
-      type: actions.CALL_NOTIFICATION
-    };
-    expect(actions.callNotification("hello")).toEqual(expectedAction);
-  });
 });
