@@ -15,7 +15,7 @@ const defaultPostsState: IPostBySubreddit = {
   lastUpdated: 0
 };
 
-describe("error reducer", () => {
+describe("reddit reducer", () => {
   it("should return the initial state", () => {
     expect(reducer(undefined, {} as redditAction)).toEqual({});
   });
