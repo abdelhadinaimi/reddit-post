@@ -17,10 +17,10 @@ const SettingsModal: React.SFC<IProps> = props => {
   const {
     handleChangeDelay,
     handleCloseSettingsModal,
-    handleToggleSound,
-    showModal,
     handleToggleNotification,
-    permission
+    handleToggleSound,
+    permission,
+    showModal
   } = props;
   return (
     <div>
