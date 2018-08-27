@@ -16,12 +16,12 @@ import {
 
 import { IPostsBySubreddit, ISettings, IState } from "../types/interfaces";
 
-
-interface IStateProps {
+export interface IStateProps {
   postsBySubreddit: IPostsBySubreddit;
   settings: ISettings;
 }
-interface IDispatchProps {
+
+export interface IDispatchProps {
   handleReload: (subreddit: string) => void;
   handleRemove: (subreddit: string) => void;
   dispatchAll: (subredditList: string[], invalidate: boolean) => void;

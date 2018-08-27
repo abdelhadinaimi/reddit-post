@@ -1,9 +1,9 @@
-import React, { FormEvent } from "react";
+import * as React from "react";
 import ErrorMessage from "./ErrorMessage";
 
-interface IProps {
+export interface IProps {
   handleOpenSettingsModal: () => void;
-  handleSubmit: (e: FormEvent) => void;
+  handleSubmit: (e: React.FormEvent) => void;
   handleChange: (e: any) => void;
   clearError: () => void;
   error: string;
@@ -12,11 +12,11 @@ interface IProps {
 
 const RedditAdder: React.SFC<IProps> = props => {
   const {
-    handleOpenSettingsModal,
-    handleSubmit,
-    handleChange,
     clearError,
     error,
+    handleChange,
+    handleOpenSettingsModal,
+    handleSubmit,
     value
   } = props;
 

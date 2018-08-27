@@ -1,10 +1,10 @@
-import React from "react";
+import * as React from "react";
 
 import Post from "./Post";
 
 import { IPost, IPostBySubreddit, ISettings } from "../types/interfaces";
 
-interface IOwnProps {
+export interface IProps {
   reddit: IPostBySubreddit;
   title: string;
   settings: ISettings;
@@ -18,10 +18,9 @@ interface IState {
   openedNewPost: boolean;
 }
 
-type Props = IOwnProps;
 
-class Subreddit extends React.Component<Props, IState> {
-  constructor(props: Props) {
+class Subreddit extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);   
     this.state = {
       collapsed: true,
@@ -30,7 +29,7 @@ class Subreddit extends React.Component<Props, IState> {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  public componentWillReceiveProps(nextProps: Props) {
+  public componentWillReceiveProps(nextProps: IProps) {
     const { playAudio, callNotification, settings} = nextProps;
     if (nextProps.reddit.hasNewPost) {
       this.setState({

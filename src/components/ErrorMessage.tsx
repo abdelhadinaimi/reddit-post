@@ -1,11 +1,11 @@
 import * as React from "react";
 
-interface IErrorProps {
+export interface IProps {
   message: string;
   clearError: () => void;
 }
 
-const ErrorMessage: React.SFC<IErrorProps> = props => (
+const ErrorMessage: React.SFC<IProps> = props => (
   <div
     className="alert alert-danger"
     role="alert"
