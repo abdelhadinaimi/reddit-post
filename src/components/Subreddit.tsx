@@ -57,13 +57,14 @@ class Subreddit extends React.Component<IProps, IState> {
       <div className="panel panel-default">
         <div className="panel-heading">
           <h4 className="panel-title">
-            <a onClick={this.handleClick} style={{ cursor: "pointer" }}>
+            <a id="title-a" onClick={this.handleClick} style={{ cursor: "pointer" }}>
               {this.props.title}
             </a>
           </h4>
 
           <span className="pull-right clickable">
             <button
+              id="reload-button"
               className="btn btn-default"
               type="button"
               onClick={onReload}
@@ -72,6 +73,7 @@ class Subreddit extends React.Component<IProps, IState> {
             </button>
 
             <button
+              id="remove-button"
               className="btn btn-default"
               type="button"
               onClick={onRemove}
@@ -80,26 +82,26 @@ class Subreddit extends React.Component<IProps, IState> {
             </button>
           </span>
 
-          <span className="time-span pull-right" style={{ marginRight: "5px" }}>
+          <span id="last-fetched-span" className="time-span pull-right" style={{ marginRight: "5px" }}>
             {isFetching || error
               ? ""
               : "Last fetched : " +
                 new Date(this.props.reddit.lastUpdated).toLocaleTimeString()}
           </span>
 
-          <span className="info-span pull-right">
+          <span id="new-post-span" className="info-span pull-right">
             {isFetching || error || !hasNewPost || openedNewPost
               ? ""
               : "New Post !"}
           </span>
         </div>
         <div
-          id="collapse1"
+          id="collapse-div"
           className={
             "panel-collapse collapse " + (this.state.collapsed ? "" : "in")
           }
         >
-          <div className="panel-body">
+          <div id="posts-div" className="panel-body">
             {isFetching
               ? "Fetching posts..."
               : error

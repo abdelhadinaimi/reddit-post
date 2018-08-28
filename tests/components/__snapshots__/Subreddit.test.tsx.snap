@@ -47,6 +47,7 @@ ShallowWrapper {
             className="panel-title"
           >
             <a
+              id="title-a"
               onClick={[Function]}
               style={
                 Object {
@@ -62,6 +63,7 @@ ShallowWrapper {
           >
             <button
               className="btn btn-default"
+              id="reload-button"
               onClick={[MockFunction]}
               type="button"
             >
@@ -71,6 +73,7 @@ ShallowWrapper {
             </button>
             <button
               className="btn btn-default"
+              id="remove-button"
               onClick={[MockFunction]}
               type="button"
             >
@@ -81,6 +84,7 @@ ShallowWrapper {
           </span>
           <span
             className="time-span pull-right"
+            id="last-fetched-span"
             style={
               Object {
                 "marginRight": "5px",
@@ -91,16 +95,18 @@ ShallowWrapper {
           </span>
           <span
             className="info-span pull-right"
+            id="new-post-span"
           >
             
           </span>
         </div>,
         <div
           className="panel-collapse collapse "
-          id="collapse1"
+          id="collapse-div"
         >
           <div
             className="panel-body"
+            id="posts-div"
           />
         </div>,
       ],
@@ -118,6 +124,7 @@ ShallowWrapper {
               className="panel-title"
             >
               <a
+                id="title-a"
                 onClick={[Function]}
                 style={
                   Object {
@@ -133,6 +140,7 @@ ShallowWrapper {
             >
               <button
                 className="btn btn-default"
+                id="reload-button"
                 onClick={[MockFunction]}
                 type="button"
               >
@@ -142,6 +150,7 @@ ShallowWrapper {
               </button>
               <button
                 className="btn btn-default"
+                id="remove-button"
                 onClick={[MockFunction]}
                 type="button"
               >
@@ -152,6 +161,7 @@ ShallowWrapper {
             </span>,
             <span
               className="time-span pull-right"
+              id="last-fetched-span"
               style={
                 Object {
                   "marginRight": "5px",
@@ -162,6 +172,7 @@ ShallowWrapper {
             </span>,
             <span
               className="info-span pull-right"
+              id="new-post-span"
             >
               
             </span>,
@@ -176,6 +187,7 @@ ShallowWrapper {
             "nodeType": "host",
             "props": Object {
               "children": <a
+                id="title-a"
                 onClick={[Function]}
                 style={
                   Object {
@@ -194,6 +206,7 @@ ShallowWrapper {
               "nodeType": "host",
               "props": Object {
                 "children": "",
+                "id": "title-a",
                 "onClick": [Function],
                 "style": Object {
                   "cursor": "pointer",
@@ -213,6 +226,7 @@ ShallowWrapper {
               "children": Array [
                 <button
                   className="btn btn-default"
+                  id="reload-button"
                   onClick={[MockFunction]}
                   type="button"
                 >
@@ -222,6 +236,7 @@ ShallowWrapper {
                 </button>,
                 <button
                   className="btn btn-default"
+                  id="remove-button"
                   onClick={[MockFunction]}
                   type="button"
                 >
@@ -243,6 +258,7 @@ ShallowWrapper {
                     className="glyphicon glyphicon-refresh"
                   />,
                   "className": "btn btn-default",
+                  "id": "reload-button",
                   "onClick": [MockFunction],
                   "type": "button",
                 },
@@ -269,6 +285,7 @@ ShallowWrapper {
                     className="glyphicon glyphicon-remove"
                   />,
                   "className": "btn btn-default",
+                  "id": "remove-button",
                   "onClick": [MockFunction],
                   "type": "button",
                 },
@@ -296,6 +313,7 @@ ShallowWrapper {
             "props": Object {
               "children": "Last fetched : 00:00:00",
               "className": "time-span pull-right",
+              "id": "last-fetched-span",
               "style": Object {
                 "marginRight": "5px",
               },
@@ -311,6 +329,7 @@ ShallowWrapper {
             "props": Object {
               "children": "",
               "className": "info-span pull-right",
+              "id": "new-post-span",
             },
             "ref": null,
             "rendered": "",
@@ -326,9 +345,10 @@ ShallowWrapper {
         "props": Object {
           "children": <div
             className="panel-body"
+            id="posts-div"
           />,
           "className": "panel-collapse collapse ",
-          "id": "collapse1",
+          "id": "collapse-div",
         },
         "ref": null,
         "rendered": Object {
@@ -338,6 +358,7 @@ ShallowWrapper {
           "props": Object {
             "children": Array [],
             "className": "panel-body",
+            "id": "posts-div",
           },
           "ref": null,
           "rendered": Array [],
@@ -362,6 +383,7 @@ ShallowWrapper {
               className="panel-title"
             >
               <a
+                id="title-a"
                 onClick={[Function]}
                 style={
                   Object {
@@ -377,6 +399,7 @@ ShallowWrapper {
             >
               <button
                 className="btn btn-default"
+                id="reload-button"
                 onClick={[MockFunction]}
                 type="button"
               >
@@ -386,6 +409,7 @@ ShallowWrapper {
               </button>
               <button
                 className="btn btn-default"
+                id="remove-button"
                 onClick={[MockFunction]}
                 type="button"
               >
@@ -396,6 +420,7 @@ ShallowWrapper {
             </span>
             <span
               className="time-span pull-right"
+              id="last-fetched-span"
               style={
                 Object {
                   "marginRight": "5px",
@@ -406,16 +431,18 @@ ShallowWrapper {
             </span>
             <span
               className="info-span pull-right"
+              id="new-post-span"
             >
               
             </span>
           </div>,
           <div
             className="panel-collapse collapse "
-            id="collapse1"
+            id="collapse-div"
           >
             <div
               className="panel-body"
+              id="posts-div"
             />
           </div>,
         ],
@@ -433,6 +460,7 @@ ShallowWrapper {
                 className="panel-title"
               >
                 <a
+                  id="title-a"
                   onClick={[Function]}
                   style={
                     Object {
@@ -448,6 +476,7 @@ ShallowWrapper {
               >
                 <button
                   className="btn btn-default"
+                  id="reload-button"
                   onClick={[MockFunction]}
                   type="button"
                 >
@@ -457,6 +486,7 @@ ShallowWrapper {
                 </button>
                 <button
                   className="btn btn-default"
+                  id="remove-button"
                   onClick={[MockFunction]}
                   type="button"
                 >
@@ -467,6 +497,7 @@ ShallowWrapper {
               </span>,
               <span
                 className="time-span pull-right"
+                id="last-fetched-span"
                 style={
                   Object {
                     "marginRight": "5px",
@@ -477,6 +508,7 @@ ShallowWrapper {
               </span>,
               <span
                 className="info-span pull-right"
+                id="new-post-span"
               >
                 
               </span>,
@@ -491,6 +523,7 @@ ShallowWrapper {
               "nodeType": "host",
               "props": Object {
                 "children": <a
+                  id="title-a"
                   onClick={[Function]}
                   style={
                     Object {
@@ -509,6 +542,7 @@ ShallowWrapper {
                 "nodeType": "host",
                 "props": Object {
                   "children": "",
+                  "id": "title-a",
                   "onClick": [Function],
                   "style": Object {
                     "cursor": "pointer",
@@ -528,6 +562,7 @@ ShallowWrapper {
                 "children": Array [
                   <button
                     className="btn btn-default"
+                    id="reload-button"
                     onClick={[MockFunction]}
                     type="button"
                   >
@@ -537,6 +572,7 @@ ShallowWrapper {
                   </button>,
                   <button
                     className="btn btn-default"
+                    id="remove-button"
                     onClick={[MockFunction]}
                     type="button"
                   >
@@ -558,6 +594,7 @@ ShallowWrapper {
                       className="glyphicon glyphicon-refresh"
                     />,
                     "className": "btn btn-default",
+                    "id": "reload-button",
                     "onClick": [MockFunction],
                     "type": "button",
                   },
@@ -584,6 +621,7 @@ ShallowWrapper {
                       className="glyphicon glyphicon-remove"
                     />,
                     "className": "btn btn-default",
+                    "id": "remove-button",
                     "onClick": [MockFunction],
                     "type": "button",
                   },
@@ -611,6 +649,7 @@ ShallowWrapper {
               "props": Object {
                 "children": "Last fetched : 00:00:00",
                 "className": "time-span pull-right",
+                "id": "last-fetched-span",
                 "style": Object {
                   "marginRight": "5px",
                 },
@@ -626,6 +665,7 @@ ShallowWrapper {
               "props": Object {
                 "children": "",
                 "className": "info-span pull-right",
+                "id": "new-post-span",
               },
               "ref": null,
               "rendered": "",
@@ -641,9 +681,10 @@ ShallowWrapper {
           "props": Object {
             "children": <div
               className="panel-body"
+              id="posts-div"
             />,
             "className": "panel-collapse collapse ",
-            "id": "collapse1",
+            "id": "collapse-div",
           },
           "ref": null,
           "rendered": Object {
@@ -653,6 +694,7 @@ ShallowWrapper {
             "props": Object {
               "children": Array [],
               "className": "panel-body",
+              "id": "posts-div",
             },
             "ref": null,
             "rendered": Array [],
