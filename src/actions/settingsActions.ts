@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { IDelayAction, INotificationAction } from "../types/actions";
+import { IDelayAction } from "../types/actions";
 
 export const TOGGLE_SOUND = "TOGGLE_SOUND";
 export const TOGGLE_NOTIFICATION = "TOGGLE_NOTIFICATION";
