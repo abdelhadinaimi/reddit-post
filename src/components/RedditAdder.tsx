@@ -3,7 +3,7 @@ import ErrorMessage from "./ErrorMessage";
 
 export interface IProps {
   handleOpenSettingsModal: () => void;
-  handleSubmit: (e: React.FormEvent) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (e: any) => void;
   clearError: () => void;
   error: string;

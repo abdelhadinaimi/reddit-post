@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -11,6 +11,11 @@ import RedditAdderComponent from "../components/RedditAdder";
 
 const regex = new RegExp("^[A-Za-z0-9][A-Za-z0-9_]{1,20}$"); // subreddit naming convention
 
+export const ERROR_MESSAGES = {
+  SUBREDDIT_MATCH : "Subreddit must contain only characters, numbers and _",
+  SUBREDDIT_NAME_LENGTH : "Subreddit must be 21 or less characters",
+}
+
 interface IDispatchProps {
   handleOpenSettingsModal: () => void;
   handleSubmit: (subreddit: string) => void;
@@ -21,11 +26,11 @@ interface IState {
   value: string;
 }
 
-type Props = IDispatchProps; // Props = IStateProps & IDispatchProps & IOwnProps
+export type IProps = IDispatchProps; // Props = IStateProps & IDispatchProps & IOwnProps
 
-class RedditAdder extends React.Component<Props, IState> {
+export class RedditAdder extends React.Component<IProps, IState> {
 
-  constructor(props: Props) {
+  constructor(props: IProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -37,12 +42,12 @@ class RedditAdder extends React.Component<Props, IState> {
     };
   }
 
-  public handleSubmit(e: FormEvent) {
+  public handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (this.state.value.length > 21) {
-      this.setState({ error: "Subreddit must be 21 or less characters" });
+      this.setState({ error: ERROR_MESSAGES.SUBREDDIT_NAME_LENGTH });
     } else if (!regex.test(this.state.value)) {
-      this.setState({ error: "Subreddit must contain only characters, numbers and _" });
+      this.setState({ error: ERROR_MESSAGES.SUBREDDIT_MATCH });
     } else {
       this.props.handleSubmit(this.state.value);
       this.clearError();
@@ -50,7 +55,7 @@ class RedditAdder extends React.Component<Props, IState> {
     this.setState({ value: "" });
   }
 
-  public handleChange(e: any) {
+  public handleChange = (e: any)  => {
     this.setState({ value: e.target.value });
   }
 
