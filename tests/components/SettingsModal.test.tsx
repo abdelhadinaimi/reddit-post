@@ -17,19 +17,11 @@ const makeProps = (): IProps => ({
   showModal: true
 });
 
+(window as any).Notification = {}
+
 describe("<SettingsModal/>", () => {
-  beforeEach(() => {
-    (window as any).Notification = {};
-  });
+ 
   it("should render correctly", () => {
-    const props = makeProps();
-    const wrapper = shallow(<SettingsModal {...props} />);
-
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it("should not render the secound check box if browser doens't support Notification API", () => {
-    (window as any).Notification = undefined;
     const props = makeProps();
     const wrapper = shallow(<SettingsModal {...props} />);
 
@@ -49,5 +41,13 @@ describe("<SettingsModal/>", () => {
 
     wrapper.find("input").simulate("change");
     expect(props.handleChangeDelay).toHaveBeenCalledTimes(1);
+  });
+
+  it("should not render the secound check box if browser doens't support Notification API", () => {
+    (window as any).Notification = undefined;
+    const props = makeProps();
+    const wrapper = shallow(<SettingsModal {...props} />);
+
+    expect(wrapper).toMatchSnapshot();
   });
 });
