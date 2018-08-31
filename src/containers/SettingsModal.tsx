@@ -25,7 +25,7 @@ interface IOwnState {
 interface IDispatchProps {
   handleChangeDelay: (e: Event & any) => void;
   handleCloseSettingsModal: () => void;
-  handleToggleNotification: () => Promise<any>;
+  handleToggleNotification: () => void;
   handleToggleSound: () => void;
 }
 
@@ -45,9 +45,12 @@ class SettingsModal extends React.Component<Props, IOwnState> {
 
   // handleToggleNotification wrapper to use this.setState
   public handleToggleNotification() {
-    this.props
-      .handleToggleNotification()
-      .then(() => this.setState({ permission: "granted" }));
+    Notification.requestPermission().then(result => {
+      if (result === "granted") {
+        this.props.handleToggleNotification();
+        this.setState({ permission: "granted" });
+      }
+    });
   }
   public render() {
     return (
@@ -75,11 +78,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): IDispatchProps => ({
     dispatch(closeSettingsModal());
   },
   handleToggleNotification: () => {
-    return Notification.requestPermission().then(result => {
-      if (result === "granted") {
-        dispatch(toggleNotification());
-      }
-    });
+    dispatch(toggleNotification());
   },
   handleToggleSound: () => {
     dispatch(toggleSound());
