@@ -26,3 +26,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Run Jest
       uses: stefanoeb/jest-action@1.0.2
+      with: 
+        jestArgs: --updateSnapshot
